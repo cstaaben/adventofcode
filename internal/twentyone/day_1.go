@@ -38,7 +38,7 @@ func day1() error {
 	}
 	logger.Debug("starting Day 1")
 
-	inputContent, err := ioutil.ReadFile("./input/day_1.txt")
+	inputContent, err := ioutil.ReadFile(conf.InputFile)
 	if err != nil {
 		logger.Errorf("error reading input file: %v\n", err)
 		return err

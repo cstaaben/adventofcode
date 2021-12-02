@@ -15,4 +15,4 @@
 vendor/
 
 # Potentially massive input files
-input/
+input/*.txt

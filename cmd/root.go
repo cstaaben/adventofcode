@@ -13,9 +13,10 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.PersistentFlags().BoolP("debug", "d", false, "Enable debug logging")
+	rootCmd.PersistentFlags().StringP("input_file", "i", "", "Input file for puzzle")
 	cobra.CheckErr(viper.BindPFlags(rootCmd.PersistentFlags()))
 
-	rootCmd.AddCommand(twentyone.DayOneCmd)
+	rootCmd.AddCommand(twentyone.DayOneCmd, twentyone.DayTwoCmd)
 }
 
 func Execute() {
