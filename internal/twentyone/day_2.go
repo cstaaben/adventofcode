@@ -13,12 +13,17 @@ import (
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
-var DayTwoCmd = &cobra.Command{
-	Use:  "two",
-	RunE: func(_ *cobra.Command, _ []string) error { return day2() },
+var dayTwoCmd = &cobra.Command{
+	Use: "two",
+	RunE: func(_ *cobra.Command, _ []string) error {
+		d := new(dayTwo)
+		return d.day2()
+	},
 }
 
-func day2() error {
+type dayTwo struct{}
+
+func (d *dayTwo) day2() error {
 	conf, err := config.New()
 	if err != nil {
 		return err

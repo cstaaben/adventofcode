@@ -8,25 +8,22 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/withmandala/go-log"
 
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
-var DayOneCmd = &cobra.Command{
-	Use:  "one",
-	RunE: func(_ *cobra.Command, _ []string) error { return day1() },
+var day1Cmd = &cobra.Command{
+	Use: "one",
+	RunE: func(_ *cobra.Command, _ []string) error {
+		d := new(dayOne)
+		return d.day1()
+	},
 }
 
-func init() {
-	DayOneCmd.Flags().Bool("part-one", false, "Run part one")
-	DayOneCmd.Flags().Bool("part-two", false, "Run part one")
-	DayOneCmd.Flags().BoolP("all", "a", false, "Run all parts")
-	cobra.CheckErr(viper.BindPFlags(DayOneCmd.Flags()))
-}
+type dayOne struct{}
 
-func day1() error {
+func (d *dayOne) day1() error {
 	conf, err := config.New()
 	if err != nil {
 		return err
@@ -48,39 +45,19 @@ func day1() error {
 
 	fmt.Print("Day 1: ")
 
-	runOne, runTwo := shouldRun()
+	runOne, runTwo := conf.ShouldRun()
 
 	if runOne {
-		partOne(readings, logger)
+		d.partOne(readings, logger)
 	}
 	if runTwo {
-		partTwo(readings, logger)
+		d.partTwo(readings, logger)
 	}
 
 	return nil
 }
 
-func shouldRun() (bool, bool) {
-	var (
-		runOne bool
-		runTwo bool
-	)
-	if viper.GetBool("all") {
-		return true, true
-	}
-
-	if viper.GetBool("part-one") {
-		runOne = true
-	}
-
-	if viper.GetBool("part-two") {
-		runTwo = true
-	}
-
-	return runOne, runTwo
-}
-
-func partOne(readings []string, logger *log.Logger) {
+func (d *dayOne) partOne(readings []string, logger *log.Logger) {
 	logger.Debug("-----> Part One")
 	increasedCnt := 0
 
@@ -98,7 +75,7 @@ func partOne(readings []string, logger *log.Logger) {
 	fmt.Printf("\tPart 1: %d\n", increasedCnt)
 }
 
-func partTwo(readings []string, logger *log.Logger) {
+func (d *dayOne) partTwo(readings []string, logger *log.Logger) {
 	logger.Debug("-----> Part Two")
 	increasedCnt := 0
 
@@ -113,8 +90,8 @@ func partTwo(readings []string, logger *log.Logger) {
 			continue
 		}
 
-		currentWindow := getWindowSum(currentStart, currentEnd, readings)
-		prevWindow := getWindowSum(prevStart, prevEnd, readings)
+		currentWindow := d.getWindowSum(currentStart, currentEnd, readings)
+		prevWindow := d.getWindowSum(prevStart, prevEnd, readings)
 
 		logger.Debugf("i: %d\n\tCurrent window  [%4d, %4d): %v = %4d\n\tPrevious window [%4d, %4d): %v = %4d\n\tincreased: %v\n",
 			i,
@@ -137,7 +114,7 @@ func partTwo(readings []string, logger *log.Logger) {
 	fmt.Printf("\tPart 2: %d\n", increasedCnt)
 }
 
-func getWindowSum(start, end int, readings []string) int {
+func (d *dayOne) getWindowSum(start, end int, readings []string) int {
 	sum := 0
 	sub := readings[start:end]
 	if len(sub) != 3 {
