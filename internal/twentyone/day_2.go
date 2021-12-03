@@ -13,7 +13,7 @@ import (
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
-var dayTwoCmd = &cobra.Command{
+var day2Cmd = &cobra.Command{
 	Use: "two",
 	RunE: func(_ *cobra.Command, _ []string) error {
 		d := new(dayTwo)
