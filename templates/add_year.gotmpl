@@ -1,0 +1,7 @@
+package cmd
+
+import "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}"
+
+func init() {
+	rootCmd.AddCommand({{ .LowerYear }}.ParentCmd)
+}
