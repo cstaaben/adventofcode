@@ -66,6 +66,7 @@ func addYear(_ *cobra.Command, args []string) error {
 	}
 
 	templateArgs["Package"] = pkg
+	templateArgs["YearInt"] = year
 	for i := 0; i < 25; i++ {
 		day := i + 1
 		dayWord := convert.NumberToWord(day)

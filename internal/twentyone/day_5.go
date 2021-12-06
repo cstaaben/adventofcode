@@ -23,7 +23,7 @@ var day5Cmd = &cobra.Command{
 type dayFive struct{}
 
 func (d *dayFive) day5() error {
-	conf, err := config.New()
+	conf, err := config.New(2021, 0)
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
 	}

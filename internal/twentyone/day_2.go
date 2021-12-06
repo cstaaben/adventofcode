@@ -24,7 +24,7 @@ var day2Cmd = &cobra.Command{
 type dayTwo struct{}
 
 func (d *dayTwo) day2() error {
-	conf, err := config.New()
+	conf, err := config.New(2021, 0)
 	if err != nil {
 		return err
 	}
@@ -34,7 +34,6 @@ func (d *dayTwo) day2() error {
 		logger = logger.WithDebug()
 	}
 	logger.Debug("-----> Day Two")
-	logger.Debugf("Config: %#v\n", conf)
 
 	var file *os.File
 	file, err = os.Open(conf.InputFile)

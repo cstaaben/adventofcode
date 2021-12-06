@@ -23,7 +23,7 @@ var day{{ .DayInt }}Cmd = &cobra.Command{
 type day{{ .PascalCaseDay }} struct {}
 
 func (d *day{{ .PascalCaseDay }}) day{{ .DayInt}} () error {
-	conf, err := config.New()
+	conf, err := config.New({{ .YearInt }}, {{ .DayInt }})
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
 	}

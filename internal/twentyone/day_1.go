@@ -24,7 +24,7 @@ var day1Cmd = &cobra.Command{
 type dayOne struct{}
 
 func (d *dayOne) day1() error {
-	conf, err := config.New()
+	conf, err := config.New(2021, 1)
 	if err != nil {
 		return err
 	}

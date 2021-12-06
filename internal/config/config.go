@@ -1,6 +1,10 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	Debug       bool   `mapstructure:"debug"`
@@ -10,8 +14,11 @@ type Config struct {
 	RunAllParts bool   `mapstructure:"all"`
 }
 
-func New() (*Config, error) {
+func New(year, day int) (*Config, error) {
 	c := new(Config)
+
+	viper.SetDefault("input_file", fmt.Sprintf("input/%d/day_%d.txt", year, day))
+
 	err := viper.Unmarshal(c)
 	return c, err
 }
