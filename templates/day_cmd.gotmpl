@@ -20,7 +20,9 @@ var day{{ .DayInt }}Cmd = &cobra.Command{
 	},
 }
 
-type day{{ .PascalCaseDay }} struct {}
+type day{{ .PascalCaseDay }} struct {
+    logger *log.Logger
+}
 
 func (d *day{{ .PascalCaseDay }}) day{{ .DayInt}} () error {
 	conf, err := config.New({{ .YearInt }}, {{ .DayInt }})
@@ -28,16 +30,16 @@ func (d *day{{ .PascalCaseDay }}) day{{ .DayInt}} () error {
 		return fmt.Errorf("parsing config: %w", err)
 	}
 
-	logger := log.New(os.Stderr)
+	d.logger = log.New(os.Stderr)
 	if conf.Debug {
-		logger = logger.WithDebug()
+		d.logger = d.logger.WithDebug()
 	}
-	logger.Debug("-----> Day {{ .CapitalDay }}")
+	d.logger.Debug("-----> Day {{ .CapitalDay }}")
 
 	var file *os.File
 	file, err = os.Open(conf.InputFile)
 	if err != nil {
-		logger.Error("error opening input file:", err)
+		d.logger.Error("error opening input file:", err)
 		return nil
 	}
 	defer file.Close()
@@ -46,19 +48,19 @@ func (d *day{{ .PascalCaseDay }}) day{{ .DayInt}} () error {
 
 	runOne, runTwo := conf.ShouldRun()
 	if runOne {
-		d.partOne(scanner, logger)
+		d.partOne(scanner)
 	}
 	if runTwo {
-		d.partTwo(scanner, logger)
+		d.partTwo(scanner)
 	}
 
 	return nil
 }
 
-func (d *day{{ .PascalCaseDay }}) partOne(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part One")
+func (d *day{{ .PascalCaseDay }}) partOne(scanner *bufio.Scanner) {
+	d.logger.Debug("----------> Part One")
 }
 
-func (d *day{{ .PascalCaseDay }}) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part Two")
+func (d *day{{ .PascalCaseDay }}) partTwo(scanner *bufio.Scanner) {
+	d.logger.Debug("----------> Part Two")
 }
