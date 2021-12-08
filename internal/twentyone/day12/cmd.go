@@ -1,4 +1,4 @@
-package {{ .Package }}
+package day12
 
 import (
 	"bufio"
@@ -12,21 +12,21 @@ import (
 )
 
 func Cmd() *cobra.Command {
-    d := new(day{{ .PascalCaseDay }})
+	d := new(dayTwelve)
 
-    return &cobra.Command{
-        Use:      "day_{{ .LowerDay }}",
-        Aliases: []string{"{{ .LowerDay }}"},
-        RunE:    d.runE,
-    }
+	return &cobra.Command{
+		Use:     "day_twelve",
+		Aliases: []string{"twelve"},
+		RunE:    d.runE,
+	}
 }
 
-type day{{ .PascalCaseDay }} struct {
-    logger *log.Logger
+type dayTwelve struct {
+	logger *log.Logger
 }
 
-func (d *day{{ .PascalCaseDay }}) runE(_ *cobra.Command, _ []string) error {
-	conf, err := config.New({{ .YearInt }}, {{ .DayInt }})
+func (d *dayTwelve) runE(_ *cobra.Command, _ []string) error {
+	conf, err := config.New(2022, 12)
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
 	}
@@ -35,7 +35,7 @@ func (d *day{{ .PascalCaseDay }}) runE(_ *cobra.Command, _ []string) error {
 	if conf.Debug {
 		d.logger = d.logger.WithDebug()
 	}
-	d.logger.Debug("-----> Day {{ .CapitalDay }}")
+	d.logger.Debug("-----> Day Twelve")
 
 	var file *os.File
 	file, err = os.Open(conf.InputFile)
@@ -58,10 +58,10 @@ func (d *day{{ .PascalCaseDay }}) runE(_ *cobra.Command, _ []string) error {
 	return nil
 }
 
-func (d *day{{ .PascalCaseDay }}) partOne(scanner *bufio.Scanner) {
+func (d *dayTwelve) partOne(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part One")
 }
 
-func (d *day{{ .PascalCaseDay }}) partTwo(scanner *bufio.Scanner) {
+func (d *dayTwelve) partTwo(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part Two")
 }

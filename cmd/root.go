@@ -3,6 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/cstaaben/adventofcode/cmd/add"
 )
 
 var rootCmd = &cobra.Command{
@@ -16,6 +18,8 @@ func init() {
 	rootCmd.PersistentFlags().Bool("part_two", false, "Run part two of the day's puzzle")
 	rootCmd.PersistentFlags().BoolP("all", "a", false, "Run all parts of the day's puzzle")
 	cobra.CheckErr(viper.BindPFlags(rootCmd.PersistentFlags()))
+
+	rootCmd.AddCommand(add.Cmd())
 }
 
 func Execute() {
