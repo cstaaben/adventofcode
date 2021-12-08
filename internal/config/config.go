@@ -17,7 +17,7 @@ type Config struct {
 func New(year, day int) (*Config, error) {
 	c := new(Config)
 
-	viper.SetDefault("input_file", fmt.Sprintf("input/%d/day_%d.txt", year, day))
+	viper.SetDefault("input_file", fmt.Sprintf("input/%d/day%d.txt", year, day))
 
 	err := viper.Unmarshal(c)
 	return c, err
