@@ -71,13 +71,8 @@ func (d *dayFive) partOne(scanner *bufio.Scanner) {
 		return
 	}
 
-	d.logger.Debugf("field should have dimensions of at least: %d x %d", maxX, maxY)
-
 	f := newField(maxX, maxY)
-
-	for _, l := range lines {
-		f = f.applyLine(l)
-	}
+	f = d.mapField(f, lines, false)
 
 	overlaps := f.overlapsOverThreshold(2)
 
@@ -86,6 +81,18 @@ func (d *dayFive) partOne(scanner *bufio.Scanner) {
 
 func (d *dayFive) partTwo(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part Two")
+
+	lines, maxX, maxY, err := d.readFile(scanner)
+	if err != nil {
+		return
+	}
+
+	f := newField(maxX, maxY)
+	f = d.mapField(f, lines, true)
+
+	overlaps := f.overlapsOverThreshold(2)
+
+	fmt.Println("Part Two:", overlaps)
 }
 
 func (d *dayFive) readFile(scanner *bufio.Scanner) ([]line, int, int, error) {
@@ -136,4 +143,19 @@ func (d *dayFive) readFile(scanner *bufio.Scanner) ([]line, int, int, error) {
 	}
 
 	return lines, maxX, maxY, nil
+}
+
+func (d *dayFive) mapField(f field, lines []line, considerDiagonals bool) field {
+	f2 := f
+	for _, l := range lines {
+		if l.isDiagonal() && !considerDiagonals {
+			d.logger.Debugf("line (%v) is diagonal, skipping", l)
+			continue
+		}
+		d.logger.Debugf("applying line: %v (diagonal: %t)", l, l.isDiagonal())
+
+		f2 = f2.applyLine(l)
+	}
+
+	return f2
 }

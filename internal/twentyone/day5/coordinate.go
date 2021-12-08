@@ -1,10 +1,17 @@
 package day5
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 type coordinate struct {
 	x int
 	y int
+}
+
+func (c coordinate) String() string {
+	return fmt.Sprintf("%d,%d", c.x, c.y)
 }
 
 func (c coordinate) equals(that coordinate) bool {

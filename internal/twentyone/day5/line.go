@@ -1,5 +1,9 @@
 package day5
 
+import (
+	"fmt"
+)
+
 type line struct {
 	start coordinate
 	end   coordinate
@@ -27,4 +31,14 @@ func (l line) determineDirection() direction {
 	}
 
 	return d
+}
+
+func (l line) isDiagonal() bool {
+	horizontal := l.start.x != l.end.x && l.start.y == l.end.y
+	vertical := l.start.x == l.end.x && l.start.y != l.end.y
+	return !(vertical || horizontal)
+}
+
+func (l line) String() string {
+	return fmt.Sprintf("%v -> %v", l.start, l.end)
 }

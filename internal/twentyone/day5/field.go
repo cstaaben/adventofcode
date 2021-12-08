@@ -1,5 +1,10 @@
 package day5
 
+import (
+	"strconv"
+	"strings"
+)
+
 type field [][]int
 
 func newField(cols, rows int) (f field) {
@@ -15,11 +20,40 @@ func newField(cols, rows int) (f field) {
 	return
 }
 
+func (f field) String() string {
+	sb := new(strings.Builder)
+
+	for i := range f {
+		for j := range f[i] {
+			var s string
+			switch f[i][j] {
+			case 0:
+				s = "."
+			default:
+				s = strconv.Itoa(f[i][j])
+			}
+
+			sb.WriteString(s)
+		}
+
+		sb.WriteString("\n")
+	}
+
+	return sb.String()
+}
+
 func (f field) applyLine(l line) field {
 	d := l.determineDirection()
+	current := l.start
 
-	for current := l.start; !current.equals(l.end); current = current.applyDirection(d) {
+	for { // do-while
 		f[current.y][current.x]++
+
+		if current.equals(l.end) {
+			break
+		}
+
+		current = current.applyDirection(d)
 	}
 
 	return f
@@ -30,7 +64,7 @@ func (f field) overlapsOverThreshold(threshold int) int {
 
 	for i := range f {
 		for j := range f[i] {
-			if f[i][j] > threshold {
+			if f[i][j] >= threshold {
 				count++
 			}
 		}
