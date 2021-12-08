@@ -1,6 +1,34 @@
 package {{ .LowerYear }}
 
-import "github.com/spf13/cobra"
+import (
+    "github.com/spf13/cobra"
+
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day1"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day2"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day3"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day4"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day5"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day6"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day7"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day8"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day9"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day10"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day11"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day12"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day13"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day14"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day15"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day16"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day17"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day18"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day19"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day20"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day21"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day22"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day23"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day24"
+    "github.com/cstaaben/adventofcode/internal/{{ .LowerYear }}/day25"
+)
 
 var ParentCmd = &cobra.Command{
 	Use: "{{ .LowerYear }}",
@@ -8,30 +36,30 @@ var ParentCmd = &cobra.Command{
 
 func init() {
 	ParentCmd.AddCommand(
-	    day1Cmd,
-	    day2Cmd,
-	    day3Cmd,
-	    day4Cmd,
-	    day5Cmd,
-	    day6Cmd,
-	    day7Cmd,
-	    day8Cmd,
-	    day9Cmd,
-	    day10Cmd,
-	    day11Cmd,
-	    day12Cmd,
-	    day13Cmd,
-	    day14Cmd,
-	    day15Cmd,
-	    day16Cmd,
-	    day17Cmd,
-	    day18Cmd,
-	    day19Cmd,
-	    day20Cmd,
-	    day21Cmd,
-	    day22Cmd,
-	    day23Cmd,
-	    day24Cmd,
-	    day25Cmd,
+	    day1.Cmd(),
+	    day2.Cmd(),
+	    day3.Cmd(),
+	    day4.Cmd(),
+	    day5.Cmd(),
+	    day6.Cmd(),
+	    day7.Cmd(),
+	    day8.Cmd(),
+	    day9.Cmd(),
+	    day10.Cmd(),
+	    day11.Cmd(),
+	    day12.Cmd(),
+	    day13.Cmd(),
+	    day14.Cmd(),
+	    day15.Cmd(),
+	    day16.Cmd(),
+	    day17.Cmd(),
+	    day18.Cmd(),
+	    day19.Cmd(),
+	    day20.Cmd(),
+	    day21.Cmd(),
+	    day22.Cmd(),
+	    day23.Cmd(),
+	    day24.Cmd(),
+	    day25.Cmd(),
     )
 }

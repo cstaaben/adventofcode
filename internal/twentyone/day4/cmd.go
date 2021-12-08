@@ -1,4 +1,4 @@
-package twentyone
+package day4
 
 import (
 	"bufio"
@@ -14,13 +14,15 @@ import (
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
-var day4Cmd = &cobra.Command{
-	Use:     "day_four",
-	Aliases: []string{"four"},
-	RunE: func(_ *cobra.Command, _ []string) error {
-		d := new(dayFour)
-		return d.day4()
-	},
+func Cmd() *cobra.Command {
+	d := new(dayFour)
+	return &cobra.Command{
+		Use:     "day_four",
+		Aliases: []string{"four"},
+		RunE: func(_ *cobra.Command, _ []string) error {
+			return d.day4()
+		},
+	}
 }
 
 type dayFour struct {

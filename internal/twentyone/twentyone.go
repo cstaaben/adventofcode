@@ -1,6 +1,10 @@
 package twentyone
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/spf13/cobra"
+
+	"github.com/cstaaben/adventofcode/internal/twentyone/day4"
+)
 
 var ParentCmd = &cobra.Command{
 	Use: "twenty_one",
@@ -11,7 +15,7 @@ func init() {
 		day1Cmd,
 		day2Cmd,
 		day3Cmd,
-		day4Cmd,
+		day4.Cmd(),
 		day5Cmd,
 		day6Cmd,
 		day7Cmd,

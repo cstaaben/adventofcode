@@ -11,20 +11,21 @@ import (
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
-var day{{ .DayInt }}Cmd = &cobra.Command{
-	Use:      "day_{{ .LowerDay }}",
-	Aliases: []string{"{{ .LowerDay }}"},
-	RunE:    func(_ *cobra.Command, _ []string) error {
-	    d := new(day{{ .PascalCaseDay }})
-		return d.day{{ .DayInt }}()
-	},
+func Cmd() *cobra.Command {
+    d := new(day{{ .PascalCaseDay }})
+
+    return &cobra.Command{
+        Use:      "day_{{ .LowerDay }}",
+        Aliases: []string{"{{ .LowerDay }}"},
+        RunE:    d.runE,
+    }
 }
 
 type day{{ .PascalCaseDay }} struct {
     logger *log.Logger
 }
 
-func (d *day{{ .PascalCaseDay }}) day{{ .DayInt}} () error {
+func (d *day{{ .PascalCaseDay }}) runE(_ *cobra.Command, _ []string) error {
 	conf, err := config.New({{ .YearInt }}, {{ .DayInt }})
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
