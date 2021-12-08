@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/withmandala/go-log"
@@ -26,7 +27,7 @@ type dayFive struct {
 }
 
 func (d *dayFive) runE(_ *cobra.Command, _ []string) error {
-	conf, err := config.New(2022, 5)
+	conf, err := config.New(2021, 5)
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
 	}
@@ -58,10 +59,81 @@ func (d *dayFive) runE(_ *cobra.Command, _ []string) error {
 	return nil
 }
 
+/**
+Incorrect attempts
+- 1372
+*/
 func (d *dayFive) partOne(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part One")
+
+	lines, maxX, maxY, err := d.readFile(scanner)
+	if err != nil {
+		return
+	}
+
+	d.logger.Debugf("field should have dimensions of at least: %d x %d", maxX, maxY)
+
+	f := newField(maxX, maxY)
+
+	for _, l := range lines {
+		f = f.applyLine(l)
+	}
+
+	overlaps := f.overlapsOverThreshold(2)
+
+	fmt.Println("Part One:", overlaps)
 }
 
 func (d *dayFive) partTwo(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part Two")
+}
+
+func (d *dayFive) readFile(scanner *bufio.Scanner) ([]line, int, int, error) {
+	var (
+		maxX int
+		maxY int
+		err  error
+
+		lines = make([]line, 0)
+	)
+
+	for scanner.Scan() {
+		rawCoords := strings.Split(scanner.Text(), " -> ")
+		rawStarts := strings.Split(rawCoords[0], ",")
+		rawEnds := strings.Split(rawCoords[1], ",")
+
+		var start, end coordinate
+		start, err = newCoordinateFromString(rawStarts[0], rawStarts[1])
+		if err != nil {
+			d.logger.Error("error getting start coordinates:", err)
+			return nil, 0, 0, err
+		}
+
+		end, err = newCoordinateFromString(rawEnds[0], rawEnds[1])
+		if err != nil {
+			d.logger.Error("error getting end coordinates:", err)
+			return nil, 0, 0, err
+		}
+
+		if start.x > maxX {
+			maxX = start.x
+		}
+		if start.y > maxY {
+			maxY = start.y
+		}
+		if end.x > maxX {
+			maxX = end.x
+		}
+		if end.y > maxY {
+			maxY = end.y
+		}
+
+		lines = append(lines, line{start: start, end: end})
+	}
+	if err = scanner.Err(); err != nil {
+		d.logger.Error("error reading file:", err)
+		return nil, 0, 0, err
+	}
+
+	return lines, maxX, maxY, nil
 }

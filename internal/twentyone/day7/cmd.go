@@ -26,7 +26,7 @@ type daySeven struct {
 }
 
 func (d *daySeven) runE(_ *cobra.Command, _ []string) error {
-	conf, err := config.New(2022, 7)
+	conf, err := config.New(2021, 7)
 	if err != nil {
 		return fmt.Errorf("parsing config: %w", err)
 	}
