@@ -3,12 +3,15 @@ package day7
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
+	"sort"
 
 	"github.com/spf13/cobra"
 	"github.com/withmandala/go-log"
 
 	"github.com/cstaaben/adventofcode/internal/config"
+	"github.com/cstaaben/adventofcode/internal/convert"
 )
 
 func Cmd() *cobra.Command {
@@ -60,8 +63,52 @@ func (d *daySeven) runE(_ *cobra.Command, _ []string) error {
 
 func (d *daySeven) partOne(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part One")
+
+	positions, err := convert.ScanCommaInts(scanner)
+	if err != nil {
+		d.logger.Error("error reading file:", err)
+		return
+	}
+
+	median := positions[len(positions)/2]
+	cost := int64(0)
+	for _, pos := range positions {
+		distance := int64(math.Abs(float64(pos - median)))
+		cost += distance
+	}
+
+	fmt.Printf("Part One:\n\tMedian: %d\n\tCost: %d\n", median, cost)
 }
 
 func (d *daySeven) partTwo(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part Two")
+
+	positions, err := convert.ScanCommaInts(scanner)
+	if err != nil {
+		d.logger.Error("error reading file:", err)
+		return
+	}
+	sort.Ints(positions)
+
+	sum := sumInts(positions)
+	avg := sum / len(positions)
+
+	cost := int64(0)
+	for _, pos := range positions {
+		dist := int64(math.Abs(float64(pos - avg)))
+
+		for i := int64(1); i <= dist; i++ {
+			cost += i
+		}
+	}
+
+	fmt.Printf("Part Two:\n\tCost: %d\n", cost)
+}
+
+func sumInts(nums []int) (sum int) {
+	for _, n := range nums {
+		sum += n
+	}
+
+	return
 }

@@ -61,7 +61,7 @@ func (d *dayOne) day1() error {
 func (d *dayOne) partOne(scanner *bufio.Scanner, logger *log.Logger) {
 	logger.Debug("----------> Part One")
 
-	expenses, err := convert.ScanIntoInts(scanner)
+	expenses, err := convert.ScanNewlineInts(scanner)
 	if err != nil {
 		logger.Error("error scanning lines into integers:", err)
 		return
@@ -86,7 +86,7 @@ func (d *dayOne) partOne(scanner *bufio.Scanner, logger *log.Logger) {
 func (d *dayOne) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
 	logger.Debug("----------> Part Two")
 
-	expenses, err := convert.ScanIntoInts(scanner)
+	expenses, err := convert.ScanNewlineInts(scanner)
 	if err != nil {
 		logger.Error("error scanning lines into integers:", err)
 		return
