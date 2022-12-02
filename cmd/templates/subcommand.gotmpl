@@ -42,7 +42,7 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
 	}
 
 	if conf.Debug {
-		logger = d.logger.WithDebug()
+		d.logger = d.logger.WithDebug()
 	}
 	d.logger.Debug("-----> Day {{ KebabToTitle .addDay }}")
 
