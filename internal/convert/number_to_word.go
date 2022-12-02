@@ -1,6 +1,9 @@
 package convert
 
-import "fmt"
+import (
+    "fmt"
+    "strings"
+)
 
 var numberToWord = map[int]string{
 	1:  "one",
@@ -39,4 +42,24 @@ func NumberToWord(n int) string {
 
 	r := n % 10
 	return fmt.Sprintf("%s-%s", numberToWord[n-r], numberToWord[r])
+}
+
+func WordToNumber(s string) int {
+    // no hyphen should mean it's in the map somewhere
+    if !strings.Contains(s, "-") {
+        return findValFromWord(s)
+    }
+
+    words := strings.Split(s, "-")
+    return findValFromWord(words[0]) + findValFromWord(words[1])
+}
+
+func findValFromWord(s string) int {
+    for n, word := range numberToWord {
+        if strings.EqualFold(s, word) {
+            return n
+        }
+    }
+
+    return 0
 }

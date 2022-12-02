@@ -3,6 +3,8 @@ package convert
 import "testing"
 
 func TestNumberToWord(t *testing.T) {
+    t.Parallel()
+
 	testCases := []struct {
 		name         string
 		num          int
@@ -38,4 +40,49 @@ func TestNumberToWord(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestWordToNumber(t *testing.T) {
+    t.Parallel()
+
+    testCases := []struct{
+        name string
+        word string
+        expectedNum int
+    }{
+        {
+            name: "less than 10",
+            word: "three",
+            expectedNum: 3,
+        },
+        {
+            name: "less than 20",
+            word: "eighteen",
+            expectedNum: 18,
+        },
+        {
+            name: "multiple of 10",
+            word: "thirty",
+            expectedNum: 30,
+        },
+        {
+            name: "even number",
+            word: "forty-two",
+            expectedNum: 42,
+        },
+        {
+            name: "multiple of 5",
+            word: "seventy-five",
+            expectedNum: 75,
+        },
+    }
+
+    for _, tc := range testCases {
+        tc := tc
+        t.Run(tc.name, func(t *testing.T) {
+            if n := WordToNumber(tc.word); n != tc.expectedNum {
+                t.Errorf("expected %d but received %d\n", tc.expectedNum, n)
+            }
+        })
+    }
 }
