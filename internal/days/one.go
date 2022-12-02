@@ -5,7 +5,7 @@ import (
     "os"
 
     "github.com/spf13/cobra"
-    log "github.com/withmandala/go-log"
+    log "github.com/cstaaben/go-log"
 
     "github.com/cstaaben/adventofcode/internal/config"
     "strconv"

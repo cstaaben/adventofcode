@@ -7,13 +7,15 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/withmandala/go-log"
+	"github.com/cstaaben/go-log"
 
 	"github.com/cstaaben/adventofcode/internal/config"
 )
 
 func New{{ KebabToPascal .addDay }}Command() *cobra.Command {
-	d := new(day{{ KebabToPascal .addDay }})
+	d := &day{{ KebabToPascal .addDay }}{
+        logger := log.New(os.Stderr).WithoutTimestamp().WithoutFile(),
+    }
 
 	cmd := &cobra.Command{
 		Use: "{{ KebabToLower .addDay }}",
@@ -28,26 +30,26 @@ func New{{ KebabToPascal .addDay }}Command() *cobra.Command {
 	return cmd
 }
 
-type day{{ KebabToPascal .addDay }} struct {}
+type day{{ KebabToPascal .addDay }} struct {
+    logger *log.Logger
+}
 
 func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
-	logger := log.New(os.Stderr)
-
 	conf, err := config.New()
 	if err != nil {
-		logger.Error("error parsing config:", err)
+		d.logger.Error("error parsing config:", err)
 		return
 	}
 
 	if conf.Debug {
-		logger = logger.WithDebug()
+		logger = d.logger.WithDebug()
 	}
-	logger.Debug("-----> Day {{ KebabToTitle .addDay }}")
+	d.logger.Debug("-----> Day {{ KebabToTitle .addDay }}")
 
 	var file *os.File
 	file, err = os.Open(conf.InputFile)
 	if err != nil {
-		logger.Error("error opening input file:", err)
+		d.logger.Error("error opening input file:", err)
 		return
 	}
 	defer file.Close()
@@ -64,11 +66,11 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
 }
 
 func (d *day{{ KebabToPascal .addDay }}) partOne(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part One")
+	d.logger.Debug("----------> Part One")
 }
 
 func (d *day{{ KebabToPascal .addDay }}) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part Two")
+	d.logger.Debug("----------> Part Two")
 }
 
 {{ end }}
