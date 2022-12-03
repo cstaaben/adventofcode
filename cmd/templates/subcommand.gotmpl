@@ -14,7 +14,7 @@ import (
 
 func New{{ KebabToPascal .addDay }}Command() *cobra.Command {
 	d := &day{{ KebabToPascal .addDay }}{
-        logger := log.New(os.Stderr).WithoutTimestamp().WithoutFile(),
+        logger: log.New(os.Stderr).WithoutTimestamp().WithoutFile(),
     }
 
 	cmd := &cobra.Command{
@@ -44,7 +44,7 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
 	if conf.Debug {
 		d.logger = d.logger.WithDebug()
 	}
-	d.logger.Debug("-----> Day {{ KebabToTitle .addDay }}")
+	d.logger.Debug("Day {{ KebabToTitle .addDay }}")
 
 	var file *os.File
 	file, err = os.Open(conf.InputFile)
@@ -65,11 +65,11 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
 	}
 }
 
-func (d *day{{ KebabToPascal .addDay }}) partOne(scanner *bufio.Scanner, logger *log.Logger) {
+func (d *day{{ KebabToPascal .addDay }}) partOne(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part One")
 }
 
-func (d *day{{ KebabToPascal .addDay }}) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
+func (d *day{{ KebabToPascal .addDay }}) partTwo(scanner *bufio.Scanner) {
 	d.logger.Debug("----------> Part Two")
 }
 
