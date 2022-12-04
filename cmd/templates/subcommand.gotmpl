@@ -58,10 +58,10 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
 
 	runOne, runTwo := conf.ShouldRun()
 	if runOne {
-		d.partOne(scanner, logger)
+		d.partOne(scanner)
 	}
 	if runTwo {
-		d.partTwo(scanner, logger)
+		d.partTwo(scanner)
 	}
 }
 
