@@ -7,7 +7,8 @@ import "github.com/cstaaben/adventofcode/internal/days"
 func init() {
 	rootCmd.AddCommand(
 		days.NewOneCommand(),
-		days.NewTwoCommand(),
 		days.NewThreeCommand(),
+		days.NewTwoCommand(),
+		days.NewFourCommand(),
 	)
 }
