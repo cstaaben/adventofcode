@@ -2,8 +2,6 @@
 
 package cmd
 
-import "github.com/cstaaben/adventofcode/internal/days"
-
 func init() {
 	rootCmd.AddCommand(
 		days.NewFourCommand(),
