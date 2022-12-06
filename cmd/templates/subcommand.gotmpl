@@ -53,7 +53,7 @@ func (d *day{{ KebabToPascal .addDay }}) run(_ *cobra.Command, _ []string) {
         file     *os.File
     )
     if conf.UseSample {
-        filepath = "input/{{ KebabToLower .addday }}/sample.txt"
+        filepath = "input/{{ KebabToLower .addDay }}/sample.txt"
     } else if conf.UseInput {
         filepath = "input/{{ KebabToLower .addDay }}/input.txt"
     }

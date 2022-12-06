@@ -107,6 +107,11 @@ func addDay(_ *cobra.Command, args []string) error {
 		return fmt.Errorf("adding subcommand: %w", err)
 	}
 
+	err = os.Mkdir(fmt.Sprintf("input/%s", convert.KebabToLower(templateArgs["addDay"].(string))), 0644)
+	if err != nil {
+		return fmt.Errorf("creating input subdirectory: %w", err)
+	}
+
 	logger.Debugf("generated internal/days/%s\n", filename)
 
 	return nil

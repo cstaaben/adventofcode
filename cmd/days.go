@@ -3,5 +3,5 @@
 package cmd
 
 func init() {
-    rootCmd.AddCommand()
+	rootCmd.AddCommand()
 }
