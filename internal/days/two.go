@@ -49,10 +49,10 @@ func NewTwoCommand() *cobra.Command {
 		Run: d.run,
 	}
 
-	cmd.Flags().StringP("input_file", "i", "", "Input file for puzzle")
 	cmd.Flags().Bool("part_one", false, "Run part one of the day's puzzle")
 	cmd.Flags().Bool("part_two", false, "Run part two of the day's puzzle")
-	cmd.Flags().BoolP("all", "a", false, "Run all parts of the day's puzzle")
+	cmd.Flags().Bool("use_sample", false, "Use sample input file for the day. Expected file is input/two/sample.txt")
+	cmd.Flags().Bool("use_input", false, "Use puzzle input file. Expected file is at input/two/input.txt.")
 
 	return cmd
 }
@@ -71,10 +71,18 @@ func (d *dayTwo) run(_ *cobra.Command, _ []string) {
 	if conf.Debug {
 		d.logger = d.logger.WithDebug()
 	}
-	d.logger.Debug("-----> Day Two")
+	d.logger.Debug("Day Two")
 
-	var file *os.File
-	file, err = os.Open(conf.InputFile)
+	var (
+		filepath string
+		file     *os.File
+	)
+	if conf.UseSample {
+		filepath = "input/two/sample.txt"
+	} else if conf.UseInput {
+		filepath = "input/two/input.txt"
+	}
+	file, err = os.Open(filepath)
 	if err != nil {
 		d.logger.Error("error opening input file:", err)
 		return
@@ -83,11 +91,10 @@ func (d *dayTwo) run(_ *cobra.Command, _ []string) {
 
 	scanner := bufio.NewScanner(file)
 
-	runOne, runTwo := conf.ShouldRun()
-	if runOne {
+	if conf.RunPartOne {
 		d.partOne(scanner)
 	}
-	if runTwo {
+	if conf.RunPartTwo {
 		d.partTwo(scanner)
 	}
 }

@@ -22,51 +22,58 @@ func NewOneCommand() *cobra.Command {
 		Run: d.run,
 	}
 
-	cmd.Flags().StringP("input_file", "i", "", "Input file for puzzle")
 	cmd.Flags().Bool("part_one", false, "Run part one of the day's puzzle")
 	cmd.Flags().Bool("part_two", false, "Run part two of the day's puzzle")
-	cmd.Flags().BoolP("all", "a", false, "Run all parts of the day's puzzle")
+	cmd.Flags().Bool("use_sample", false, "Use sample input file for the day. Expected file is input/one/sample.txt")
+	cmd.Flags().Bool("use_input", false, "Use puzzle input file. Expected file is at input/one/input.txt.")
 
 	return cmd
 }
 
-type dayOne struct{}
+type dayOne struct {
+	logger *log.Logger
+}
 
 func (d *dayOne) run(_ *cobra.Command, _ []string) {
-	logger := log.New(os.Stderr)
-
 	conf, err := config.New()
 	if err != nil {
-		logger.Error("error parsing config:", err)
+		d.logger.Error("error parsing config:", err)
 		return
 	}
 
 	if conf.Debug {
-		logger = logger.WithDebug()
+		d.logger = d.logger.WithDebug()
 	}
-	logger.Debug("-----> Day One")
+	d.logger.Debug("Day One")
 
-	var file *os.File
-	file, err = os.Open(conf.InputFile)
+	var (
+		filepath string
+		file     *os.File
+	)
+	if conf.UseSample {
+		filepath = "input/one/sample.txt"
+	} else if conf.UseInput {
+		filepath = "input/one/input.txt"
+	}
+	file, err = os.Open(filepath)
 	if err != nil {
-		logger.Error("error opening input file:", err)
+		d.logger.Error("error opening input file:", err)
 		return
 	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 
-	runOne, runTwo := conf.ShouldRun()
-	if runOne {
-		d.partOne(scanner, logger)
+	if conf.RunPartOne {
+		d.partOne(scanner)
 	}
-	if runTwo {
-		d.partTwo(scanner, logger)
+	if conf.RunPartTwo {
+		d.partTwo(scanner)
 	}
 }
 
-func (d *dayOne) partOne(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part One")
+func (d *dayOne) partOne(scanner *bufio.Scanner) {
+	d.logger.Debug("----------> Part One")
 
 	highestIdx := 0
 	highestCount := 0
@@ -96,8 +103,8 @@ func (d *dayOne) partOne(scanner *bufio.Scanner, logger *log.Logger) {
  * Incorrect guesses:
  *  - 137545 (too low)
  */
-func (d *dayOne) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
-	logger.Debug("----------> Part Two")
+func (d *dayOne) partTwo(scanner *bufio.Scanner) {
+	d.logger.Debug("----------> Part Two")
 
 	highestCount := make([]int, 0)
 	i := 0
@@ -111,7 +118,7 @@ func (d *dayOne) partTwo(scanner *bufio.Scanner, logger *log.Logger) {
 			} else if highestCount[0] < count {
 				// if the lowest high-count is lower than our current count,
 				// replace the bottom-most high count
-				logger.Debugf("Current highs: %v\n\tReplacing %d with %d\n", highestCount, highestCount[0], count)
+				d.logger.Debugf("Current highs: %v\n\tReplacing %d with %d\n", highestCount, highestCount[0], count)
 				highestCount[0] = count
 				sort.Ints(highestCount)
 			}
